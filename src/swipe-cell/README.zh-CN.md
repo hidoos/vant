@@ -1,19 +1,24 @@
 # SwipeCell 滑动单元格
 
+### 介绍
+
+可以左右滑动来展示操作按钮的单元格组件。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { SwipeCell } from 'vant';
 
-Vue.use(SwipeCell);
+const app = createApp();
+app.use(SwipeCell);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-`SwipeCell`组件提供了`left`和`right`两个插槽，用于定义两侧滑动区域的内容
+`SwipeCell` 组件提供了 `left` 和 `right` 两个插槽，用于定义两侧滑动区域的内容。
 
 ```html
 <van-swipe-cell>
@@ -30,7 +35,7 @@ Vue.use(SwipeCell);
 
 ### 自定义内容
 
-`SwipeCell`内容可以嵌套任意内容，比如嵌套一个商品卡片
+`SwipeCell` 可以嵌套任意内容，比如嵌套一个商品卡片。
 
 ```html
 <van-swipe-cell>
@@ -61,7 +66,7 @@ Vue.use(SwipeCell);
 
 ### 异步关闭
 
-通过传入`before-close`回调函数，可以自定义两侧滑动内容关闭时的行为
+通过传入 `before-close` 回调函数，可以自定义两侧滑动内容关闭时的行为。
 
 ```html
 <van-swipe-cell :before-close="beforeClose">
@@ -79,21 +84,20 @@ Vue.use(SwipeCell);
 export default {
   methods: {
     // position 为关闭时点击的位置
-    // instance 为对应的 SwipeCell 实例
-    beforeClose({ position, instance }) {
+    beforeClose({ position }) {
       switch (position) {
         case 'left':
         case 'cell':
         case 'outside':
-          instance.close();
-          break;
+          return true;
         case 'right':
-          Dialog.confirm({
-            message: '确定删除吗？',
-          }).then(() => {
-            instance.close();
+          return new Promise((resolve) => {
+            this.$dialog
+              .confirm({
+                message: '确定删除吗？',
+              })
+              .then(resolve);
           });
-          break;
       }
     },
   },
@@ -106,12 +110,12 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| name `v2.0.4` | 标识符，可以在事件参数中获取到 | _number \| string_ | - |
+| name | 标识符，可以在事件参数中获取到 | _number \| string_ | - |
 | left-width | 指定左侧滑动区域宽度，单位为`px` | _number \| string_ | `auto` |
 | right-width | 指定右侧滑动区域宽度，单位为`px` | _number \| string_ | `auto` |
-| before-close `v2.3.0` | 关闭前的回调函数 | _Function_ | - |
+| before-close | 关闭前的回调函数，返回 `false` 可阻止关闭，支持返回 Promise | _(args) => boolean \| Promise_ | - |
 | disabled | 是否禁用滑动 | _boolean_ | `false` |
-| stop-propagation `v2.1.0` | 是否阻止滑动事件冒泡 | _boolean_ | `false` |
+| stop-propagation | 是否阻止滑动事件冒泡 | _boolean_ | `false` |
 
 ### Slots
 
@@ -133,15 +137,14 @@ export default {
 
 beforeClose 的第一个参数为对象，对象中包含以下属性：
 
-| 参数名   | 说明                                               | 类型        |
-| -------- | -------------------------------------------------- | ----------- |
-| name     | 标识符                                             | _string_    |
-| position | 关闭时的点击位置 (`left` `right` `cell` `outside`) | _string_    |
-| instance | SwipeCell 实例，用于调用实例方法                   | _SwipeCell_ |
+| 参数名   | 说明                                               | 类型     |
+| -------- | -------------------------------------------------- | -------- |
+| name     | 标识符                                             | _string_ |
+| position | 关闭时的点击位置 (`left` `right` `cell` `outside`) | _string_ |
 
 ### 方法
 
-通过 ref 可以获取到 SwipeCell 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 SwipeCell 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)。
 
 | 方法名 | 说明             | 参数                     | 返回值 |
 | ------ | ---------------- | ------------------------ | ------ |

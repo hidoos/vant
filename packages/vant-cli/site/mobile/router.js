@@ -1,4 +1,4 @@
-import { nextTick } from 'vue';
+import { watch, nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import DemoHome from './components/DemoHome';
 import { decamelize } from '../common';
@@ -28,7 +28,8 @@ function getRoutes() {
 
   if (langs.length) {
     routes.push({
-      path: '*',
+      name: 'NotFound',
+      path: '/:path(.*)+',
       redirect: (route) => `/${getLangFromRoute(route)}/`,
     });
 
@@ -41,7 +42,8 @@ function getRoutes() {
     });
   } else {
     routes.push({
-      path: '*',
+      name: 'NotFound',
+      path: '/:path(.*)+',
       redirect: () => '/',
     });
 
@@ -82,13 +84,13 @@ function getRoutes() {
 }
 
 export const router = createRouter({
-  mode: createWebHashHistory(),
+  history: createWebHashHistory(),
   routes: getRoutes(),
   scrollBehavior: (to, from, savedPosition) => savedPosition || { x: 0, y: 0 },
 });
 
-router.afterEach(() => {
-  if (!router.currentRoute.redirectedFrom) {
+watch(router.currentRoute, () => {
+  if (!router.currentRoute.value.redirectedFrom) {
     nextTick(window.syncPath);
   }
 });

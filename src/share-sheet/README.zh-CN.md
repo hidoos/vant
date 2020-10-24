@@ -7,22 +7,23 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { ShareSheet } from 'vant';
 
-Vue.use(ShareSheet);
+const app = createApp();
+app.use(ShareSheet);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-分享面板通过`options`属性来定义分享选项，数组的每一项是一个对象，对象格式见文档下方表格。
+分享面板通过 `options` 属性来定义分享选项，数组的每一项是一个对象，对象格式见文档下方表格。
 
 ```html
 <van-cell title="显示分享面板" @click="showShare = true" />
 <van-share-sheet
-  v-model="showShare"
+  v-model:show="showShare"
   title="立即分享给好友"
   :options="options"
   @select="onSelect"
@@ -56,11 +57,11 @@ export default {
 
 ### 展示多行选项
 
-当分享选项的数量较多时，可以将`options`定义为数组嵌套的格式，每个子数组会作为一行选项展示
+当分享选项的数量较多时，可以将 `options` 定义为数组嵌套的格式，每个子数组会作为一行选项展示。
 
 ```html
 <van-share-sheet
-  v-model="showShare"
+  v-model:show="showShare"
   title="立即分享给好友"
   :options="options"
 />
@@ -90,10 +91,10 @@ export default {
 
 ### 自定义图标
 
-除了使用内置的几种图标外，可以直接在`icon`中传入图片 URL 来使用自定义的图标
+除了使用内置的几种图标外，可以直接在 `icon` 中传入图片 URL 来使用自定义的图标。
 
 ```html
-<van-share-sheet v-model="showShare" :options="options" />
+<van-share-sheet v-model:show="showShare" :options="options" />
 ```
 
 ```js
@@ -122,15 +123,32 @@ export default {
 
 ### 展示描述信息
 
-通过`description`属性可以设置标题下方的描述文字
+通过 `description` 属性可以设置标题下方的描述文字, 在 `options` 内设置 `description` 属性可以添加分享选项描述。
 
 ```html
 <van-share-sheet
-  v-model="showShare"
+  v-model:show="showShare"
   :options="options"
   title="立即分享给好友"
   description="描述信息"
 />
+```
+
+```js
+export default {
+  data() {
+    return {
+      showShare: false,
+      options: [
+        { name: '微信', icon: 'wechat' },
+        { name: '微博', icon: 'weibo' },
+        { name: '复制链接', icon: 'link', description: '描述信息' },
+        { name: '分享海报', icon: 'poster' },
+        { name: '二维码', icon: 'qrcode' },
+      ],
+    };
+  },
+};
 ```
 
 ## API
@@ -139,9 +157,10 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| v-model:show | 是否显示分享面板 | _boolean_ | `false` |
 | options | 分享选项 | _Option[]_ | `[]` |
 | title | 顶部标题 | _string_ | - |
-| cancel-text | 取消按钮文字 | _string_ | `'取消'` |
+| cancel-text | 取消按钮文字，传入空字符串可以隐藏按钮 | _string_ | `'取消'` |
 | description | 标题下方的辅助描述文字 | _string_ | - |
 | duration | 动画时长，单位秒 | _number \| string_ | `0.3` |
 | overlay | 是否显示遮罩层 | _boolean_ | `true` |
@@ -150,7 +169,7 @@ export default {
 | close-on-popstate | 是否在页面回退时自动关闭 | _boolean_ | `true` |
 | close-on-click-overlay | 是否在点击遮罩层后关闭 | _boolean_ | `true` |
 | safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/quickstart#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
-| get-container | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| () => Element_ | - |
+| teleport | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| Element_ | - |
 
 ### Option 数据结构
 
@@ -159,14 +178,17 @@ export default {
 | 键名 | 说明 | 类型 |
 | --- | --- | --- |
 | name | 分享渠道名称 | _string_ |
+| description `v2.8.5` | 分享选项描述 | _string_ |
 | icon | 图标，可选值为 `wechat` `weibo` `qq` `link` `qrcode` `poster`，支持传入图片 URL | _string_ |
+| className | 分享选项类名 | _string_ |
 
 ### Events
 
-| 事件名 | 说明               | 回调参数                        |
-| ------ | ------------------ | ------------------------------- |
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
 | select | 点击分享选项时触发 | _option: Option, index: number_ |
-| cancel | 点击取消按钮时触发 | -                               |
+| cancel | 点击取消按钮时触发 | - |
+| click-overlay `v2.9.1` | 点击遮罩层时触发 | - |
 
 ### Slots
 

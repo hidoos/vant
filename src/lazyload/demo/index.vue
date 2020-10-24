@@ -1,19 +1,21 @@
 <template>
-  <demo-section>
-    <demo-block :title="t('basicUsage')">
-      <img v-for="img in imageList" v-lazy="img" />
-    </demo-block>
+  <demo-block :title="t('basicUsage')">
+    <img v-for="img in imageList" :key="img" v-lazy="img" />
+  </demo-block>
 
-    <demo-block :title="t('title2')">
-      <div v-for="img in backgroundImageList" v-lazy:background-image="img" />
-    </demo-block>
+  <demo-block :title="t('title2')">
+    <div
+      v-for="img in backgroundImageList"
+      :key="img"
+      v-lazy:background-image="img"
+    />
+  </demo-block>
 
-    <demo-block :title="t('title3')">
-      <lazy-component>
-        <img v-for="img in componentImageList" v-lazy="img" />
-      </lazy-component>
-    </demo-block>
-  </demo-section>
+  <demo-block :title="t('title3')">
+    <lazy-component>
+      <img v-for="img in componentImageList" :key="img" v-lazy="img" />
+    </lazy-component>
+  </demo-block>
 </template>
 
 <script>
@@ -68,7 +70,6 @@ export default {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     border-radius: 12px;
-    box-shadow: 0 8px 12px #ebedf0;
   }
 
   .van-doc-demo-block__title,

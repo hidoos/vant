@@ -1,45 +1,43 @@
 <template>
-  <demo-section>
-    <demo-block :title="t('basicUsage')">
-      <van-contact-card
-        :type="cardType"
-        :name="currentContact.name"
-        :tel="currentContact.tel"
-        @click="showList = true"
+  <demo-block :title="t('basicUsage')">
+    <van-contact-card
+      :type="cardType"
+      :name="currentContact.name"
+      :tel="currentContact.tel"
+      @click="showList = true"
+    />
+
+    <van-popup v-model:show="showList" position="bottom" :lazy-render="false">
+      <van-contact-list
+        v-model="chosenContactId"
+        :list="list"
+        :default-tag-text="t('defaultTagText')"
+        @add="onAdd"
+        @edit="onEdit"
+        @select="onSelect"
       />
+    </van-popup>
 
-      <van-popup v-model="showList" position="bottom" :lazy-render="false">
-        <van-contact-list
-          v-model="chosenContactId"
-          :list="list"
-          :default-tag-text="t('defaultTagText')"
-          @add="onAdd"
-          @edit="onEdit"
-          @select="onSelect"
-        />
-      </van-popup>
-
-      <van-popup v-model="showEdit" position="bottom" :lazy-render="false">
-        <van-contact-edit
-          show-set-default
-          :set-default-label="t('defaultLabel')"
-          :contact-info="editingContact"
-          :is-edit="isEdit"
-          @save="onSave"
-          @delete="onDelete"
-        />
-      </van-popup>
-    </demo-block>
-
-    <demo-block :title="t('uneditable')">
-      <van-contact-card
-        type="edit"
-        :name="mockContact.name"
-        :tel="mockContact.tel"
-        :editable="false"
+    <van-popup v-model:show="showEdit" position="bottom" :lazy-render="false">
+      <van-contact-edit
+        show-set-default
+        :set-default-label="t('defaultLabel')"
+        :contact-info="editingContact"
+        :is-edit="isEdit"
+        @save="onSave"
+        @delete="onDelete"
       />
-    </demo-block>
-  </demo-section>
+    </van-popup>
+  </demo-block>
+
+  <demo-block :title="t('uneditable')">
+    <van-contact-card
+      type="edit"
+      :name="mockContact.name"
+      :tel="mockContact.tel"
+      :editable="false"
+    />
+  </demo-block>
 </template>
 
 <script>
@@ -115,7 +113,7 @@ export default {
 
       if (this.isEdit) {
         this.list = this.list.map((item) =>
-          (item.id === info.id ? info : item)
+          item.id === info.id ? info : item
         );
       } else {
         this.list.push(info);
@@ -135,10 +133,12 @@ export default {
 </script>
 
 <style lang="less">
+@import '../../style/var';
+
 .demo-contact-card {
   .van-popup {
     height: 100%;
-    background-color: #f2f2f2;
+    background-color: @background-color;
   }
 }
 </style>

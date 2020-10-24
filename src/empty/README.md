@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Empty } from 'vant';
 
-Vue.use(Empty);
+const app = createApp();
+app.use(Empty);
 ```
 
 ## Usage
@@ -19,7 +20,7 @@ Vue.use(Empty);
 
 ### Image Type
 
-Use the image prop to display different placeholder images
+Use the image prop to display different placeholder images.
 
 ```html
 <!-- Error -->
@@ -58,6 +59,7 @@ Use the image prop to display different placeholder images
 <style>
   .bottom-button {
     width: 160px;
+    height: 40px;
   }
 </style>
 ```
@@ -69,6 +71,7 @@ Use the image prop to display different placeholder images
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
 | image | Image type，can be set to `error` `network` `search` or image URL | _string_ | `default` |
+| image-size `v2.10.11` | Image size | _number \| string_ | - |
 | description | Desciption | _string_ | - |
 
 ### Slots

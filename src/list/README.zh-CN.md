@@ -7,21 +7,22 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { List } from 'vant';
 
-Vue.use(List);
+const app = createApp();
+app.use(List);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-List 组件通过`loading`和`finished`两个变量控制加载状态，当组件滚动到底部时，会触发`load`事件并将`loading`设置成`true`。此时可以发起异步操作并更新数据，数据更新完毕后，将`loading`设置成`false`即可。若数据已全部加载完毕，则直接将`finished`设置成`true`即可。
+List 组件通过 `loading` 和 `finished` 两个变量控制加载状态，当组件滚动到底部时，会触发 `load` 事件并将 `loading` 设置成 `true`。此时可以发起异步操作并更新数据，数据更新完毕后，将 `loading` 设置成 `false` 即可。若数据已全部加载完毕，则直接将 `finished` 设置成 `true` 即可。
 
 ```html
 <van-list
-  v-model="loading"
+  v-model:loading="loading"
   :finished="finished"
   finished-text="没有更多了"
   @load="onLoad"
@@ -63,12 +64,12 @@ export default {
 
 ### 错误提示
 
-若列表数据加载失败，将`error`设置成`true`即可显示错误提示，用户点击错误提示后会重新触发 load 事件。
+若列表数据加载失败，将 `error` 设置成 `true` 即可显示错误提示，用户点击错误提示后会重新触发 load 事件。
 
 ```html
 <van-list
-  v-model="loading"
-  :error.sync="error"
+  v-model:loading="loading"
+  v-model:error="error"
   error-text="请求失败，点击重新加载"
   @load="onLoad"
 >
@@ -97,12 +98,12 @@ export default {
 
 ### 下拉刷新
 
-List 组件可以与 [PullRefresh](#/zh-CN/pull-refresh) 组件结合使用，实现下拉刷新的效果
+List 组件可以与 [PullRefresh](#/zh-CN/pull-refresh) 组件结合使用，实现下拉刷新的效果。
 
 ```html
 <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
   <van-list
-    v-model="loading"
+    v-model:loading="loading"
     :finished="finished"
     finished-text="没有更多了"
     @load="onLoad"
@@ -159,7 +160,7 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model | 是否处于加载状态，加载过程中不触发`load`事件 | _boolean_ | `false` |
+| v-model:loading | 是否处于加载状态，加载过程中不触发`load`事件 | _boolean_ | `false` |
 | finished | 是否已加载完成，加载完成后不再触发`load`事件 | _boolean_ | `false` |
 | error | 是否加载失败，加载失败后点击错误提示可以重新<br>触发`load`事件，必须使用`sync`修饰符 | _boolean_ | `false` |
 | offset | 滚动条与底部距离小于 offset 时触发`load`事件 | _number \| string_ | `300` |
@@ -177,7 +178,7 @@ export default {
 
 ### 方法
 
-通过 ref 可以获取到 List 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 List 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)。
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |

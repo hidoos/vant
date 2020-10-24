@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { CountDown } from 'vant';
 
-Vue.use(CountDown);
+const app = createApp();
+app.use(CountDown);
 ```
 
 ## Usage
@@ -43,22 +44,28 @@ export default {
 
 ```html
 <van-count-down :time="time">
-  <template v-slot="timeData">
-    <span class="item">{{ timeData.hours }}</span>
-    <span class="item">{{ timeData.minutes }}</span>
-    <span class="item">{{ timeData.seconds }}</span>
+  <template #default="timeData">
+    <span class="block">{{ timeData.hours }}</span>
+    <span class="colon">:</span>
+    <span class="block">{{ timeData.minutes }}</span>
+    <span class="colon">:</span>
+    <span class="block">{{ timeData.seconds }}</span>
   </template>
 </van-count-down>
 
 <style>
-  .item {
+  .colon {
+    display: inline-block;
+    margin: 0 4px;
+    color: #ee0a24;
+  }
+  .block {
     display: inline-block;
     width: 22px;
-    margin-right: 5px;
     color: #fff;
     font-size: 12px;
     text-align: center;
-    background-color: #1989fa;
+    background-color: #ee0a24;
   }
 </style>
 ```
@@ -127,30 +134,31 @@ export default {
 
 ### Events
 
-| Event           | Description                        | Arguments            |
-| --------------- | ---------------------------------- | -------------------- |
-| finish          | Triggered when count down finished | -                    |
-| change `v2.4.4` | Triggered when count down changed  | _timeData: TimeData_ |
+| Event | Description | Arguments |
+| --- | --- | --- |
+| finish | Triggered when count down finished | - |
+| change `v2.4.4` | Triggered when count down changed | _currentTime: CurrentTime_ |
 
 ### Slots
 
-| Name    | Description    | SlotProps            |
-| ------- | -------------- | -------------------- |
-| default | Custom Content | _timeData: TimeData_ |
+| Name    | Description    | SlotProps                  |
+| ------- | -------------- | -------------------------- |
+| default | Custom Content | _currentTime: CurrentTime_ |
 
 ### TimeData Structure
 
-| Name         | Description         | Type     |
-| ------------ | ------------------- | -------- |
-| days         | Remain days         | _number_ |
-| hours        | Remain hours        | _number_ |
-| minutes      | Remain minutes      | _number_ |
-| seconds      | Remain seconds      | _number_ |
-| milliseconds | Remain milliseconds | _number_ |
+| Name         | Description                   | Type     |
+| ------------ | ----------------------------- | -------- |
+| total        | Total time, unit milliseconds | _number_ |
+| days         | Remain days                   | _number_ |
+| hours        | Remain hours                  | _number_ |
+| minutes      | Remain minutes                | _number_ |
+| seconds      | Remain seconds                | _number_ |
+| milliseconds | Remain milliseconds           | _number_ |
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get CountDown instance and call instance methods
+Use [ref](https://vuejs.org/v2/api/#ref) to get CountDown instance and call instance methods.
 
 | Name  | Description      | Attribute | Return value |
 | ----- | ---------------- | --------- | ------------ |

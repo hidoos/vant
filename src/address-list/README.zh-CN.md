@@ -1,12 +1,17 @@
 # AddressList 地址列表
 
+### 介绍
+
+展示收货地址列表。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { AddressList } from 'vant';
 
-Vue.use(AddressList);
+const app = createApp();
+app.use(AddressList);
 ```
 
 ## 代码演示
@@ -38,6 +43,7 @@ export default {
           name: '张三',
           tel: '13000000000',
           address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室',
+          isDefault: true,
         },
         {
           id: '2',
@@ -104,7 +110,7 @@ export default {
 
 ### Slots
 
-| 名称                 | 说明                 | SlotProps  |
+| 名称                 | 说明                 | 参数       |
 | -------------------- | -------------------- | ---------- |
 | default              | 在列表下方插入内容   | -          |
 | top                  | 在顶部插入内容       | -          |

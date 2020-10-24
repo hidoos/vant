@@ -3,26 +3,25 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Collapse, CollapseItem } from 'vant';
 
-Vue.use(Collapse);
-Vue.use(CollapseItem);
+const app = createApp();
+app.use(Collapse);
+app.use(CollapseItem);
 ```
 
 ## Usage
 
 ### Basic Usage
 
-Use `v-model` to control the name of active panels
+Use `v-model` to control the name of active panels.
 
 ```html
 <van-collapse v-model="activeNames">
   <van-collapse-item title="Title1" name="1">Content</van-collapse-item>
   <van-collapse-item title="Title2" name="2">Content</van-collapse-item>
-  <van-collapse-item title="Title3" name="3" disabled
-    >Content</van-collapse-item
-  >
+  <van-collapse-item title="Title3" name="3">Content</van-collapse-item>
 </van-collapse>
 ```
 
@@ -56,6 +55,22 @@ export default {
     };
   },
 };
+```
+
+### Disabled
+
+Use the `disabled` prop to disable CollaseItem.
+
+```html
+<van-collapse v-model="activeNames">
+  <van-collapse-item title="Title1" name="1">Content</van-collapse-item>
+  <van-collapse-item title="Title2" name="2" disabled>
+    Content
+  </van-collapse-item>
+  <van-collapse-item title="Title3" name="3" disabled>
+    Content
+  </van-collapse-item>
+</van-collapse>
 ```
 
 ### Custom title
@@ -126,3 +141,11 @@ export default {
 | icon       | Custom icon       |
 | title      | Custom title      |
 | right-icon | Custom right icon |
+
+### CollapseItem Methods
+
+Use [ref](https://vuejs.org/v2/api/#ref) to get CollapseItem instance and call instance methods.
+
+| Name | Description | Attribute | Return value |
+| --- | --- | --- | --- |
+| toggle `v2.10.9` | Toggle expanded status | _expanded: boolean_ | - |

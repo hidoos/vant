@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Pagination } from 'vant';
 
-Vue.use(Pagination);
+const app = createApp();
+app.use(Pagination);
 ```
 
 ## Usage
@@ -44,6 +45,20 @@ export default {
 />
 ```
 
+### Custom Button
+
+```html
+<van-pagination v-model="currentPage" :total-items="50" :show-page-size="5">
+  <template #prev-text>
+    <van-icon name="arrow-left" />
+  </template>
+  <template #next-text>
+    <van-icon name="arrow" />
+  </template>
+  <template #page="{ text }">{{ text }}</template>
+</van-pagination>
+```
+
 ## API
 
 ### Props
@@ -65,3 +80,11 @@ export default {
 | Event  | Description              | Arguments |
 | ------ | ------------------------ | --------- |
 | change | Triggered on page change | -         |
+
+### Slots
+
+| Name | Description | SlotProps |
+| --- | --- | --- |
+| page `v2.10.9` | Custom pagination item | _{ number: number, text: string, active: boolean }_ |
+| prev-text `v2.10.9` | Custom prev text | `-` |
+| next-text `v2.10.9` | Custom next text | `-` |

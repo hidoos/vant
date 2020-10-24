@@ -29,6 +29,17 @@ export default {
     if (this.searchConfig) {
       this.docsearchInstance = window.docsearch({
         ...this.searchConfig,
+        transformData: (hits) => {
+          hits.forEach((hit) => {
+            if (hit.anchor) {
+              hit.url = hit.url + '#' + hit.anchor;
+              hit.anchor = null;
+            }
+          });
+          if (this.searchConfig.transformData) {
+            this.searchConfig.transformData(hits);
+          }
+        },
         inputSelector: '.van-doc-search',
         algoliaOptions: {
           facetFilters: [`lang:${this.lang}`],
@@ -43,8 +54,8 @@ export default {
 @import '../../common/style/var';
 
 .van-doc-search {
-  width: 200px;
-  height: 60px;
+  width: 400px;
+  height: @van-doc-header-top-height;
   margin-left: 140px;
   color: #fff;
   font-size: 14px;
@@ -72,7 +83,7 @@ export default {
   }
 
   .algolia-docsearch-suggestion--title {
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .algolia-docsearch-suggestion--text {

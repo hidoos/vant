@@ -3,11 +3,12 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { CouponCell, CouponList } from 'vant';
 
-Vue.use(CouponCell);
-Vue.use(CouponList);
+const app = createApp();
+app.use(CouponCell);
+app.use(CouponList);
 ```
 
 ## 代码演示
@@ -88,7 +89,7 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model | 当前输入的兑换码 | _string_ | - |
+| v-model:code | 当前输入的兑换码 | _string_ | - |
 | chosen-coupon | 当前选中优惠券的索引 | _number_ | `-1` |
 | coupons | 可用优惠券列表 | _Coupon[]_ | `[]` |
 | disabled-coupons | 不可用优惠券列表 | _Coupon[]_ | `[]` |
@@ -104,7 +105,7 @@ export default {
 | input-placeholder | 输入框文字提示 | _string_ | `请输入优惠码` |
 | show-exchange-bar | 是否展示兑换栏 | _boolean_ | `true` |
 | currency | 货币符号 | _string_ | `¥` |
-| empty-image `v2.1.0` | 列表为空时的占位图 | _string_ | `https://img.yzcdn.cn/vant/coupon-empty.png` |
+| empty-image | 列表为空时的占位图 | _string_ | `https://img.yzcdn.cn/vant/coupon-empty.png` |
 | show-count `v2.3.0` | 是否展示可用 / 不可用数量 | _boolean_ | `true` |
 
 ### CouponList Events

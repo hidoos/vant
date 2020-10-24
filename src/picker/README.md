@@ -7,10 +7,11 @@ The Picker component is usually used with [Popup](#/en-US/popup) Component.
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Picker } from 'vant';
 
-Vue.use(Picker);
+const app = createApp();
+app.use(Picker);
 ```
 
 ## Usage
@@ -18,41 +19,12 @@ Vue.use(Picker);
 ### Basic Usage
 
 ```html
-<van-picker :columns="columns" @change="onChange" />
-```
-
-```js
-import { Toast } from 'vant';
-
-export default {
-  data() {
-    return {
-      columns: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
-    };
-  },
-  methods: {
-    onChange(picker, value, index) {
-      Toast(`Value: ${value}, Index: ${index}`);
-    },
-  },
-};
-```
-
-### Default Index
-
-```html
-<van-picker :columns="columns" :default-index="2" @change="onChange" />
-```
-
-### Show Toolbar
-
-```html
 <van-picker
-  show-toolbar
   title="Title"
   :columns="columns"
-  @cancel="onCancel"
   @confirm="onConfirm"
+  @cancel="onCancel"
+  @change="onChange"
 />
 ```
 
@@ -69,6 +41,9 @@ export default {
     onConfirm(value, index) {
       Toast(`Value: ${value}, Index: ${index}`);
     },
+    onChange(value, index) {
+      Toast(`Value: ${value}, Index: ${index}`);
+    },
     onCancel() {
       Toast('Cancel');
     },
@@ -76,10 +51,16 @@ export default {
 };
 ```
 
+### Default Index
+
+```html
+<van-picker title="Title" :columns="columns" :default-index="2" />
+```
+
 ### Multiple Columns
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" />
+<van-picker title="Title" :columns="columns" />
 ```
 
 ```js
@@ -104,7 +85,7 @@ export default {
 ### Cascade
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" />
+<van-picker title="Title" :columns="columns" />
 ```
 
 ```js
@@ -167,7 +148,7 @@ export default {
 ### Set Column Values
 
 ```html
-<van-picker :columns="columns" @change="onChange" />
+<van-picker ref="picker" title="Title" :columns="columns" @change="onChange" />
 ```
 
 ```js
@@ -183,8 +164,8 @@ export default {
     };
   },
   methods: {
-    onChange(picker, values) {
-      picker.setColumnValues(1, states[values[0]]);
+    onChange(values) {
+      this.$refs.picker.setColumnValues(1, states[values[0]]);
     },
   },
 };
@@ -192,10 +173,10 @@ export default {
 
 ### Loading
 
-When Picker columns data is acquired asynchronously, use `loading` prop to show loading prompt
+When Picker columns data is acquired asynchronously, use `loading` prop to show loading prompt.
 
 ```html
-<van-picker :columns="columns" :loading="loading" />
+<van-picker title="Title" :columns="columns" :loading="loading" />
 ```
 
 ```js
@@ -226,9 +207,9 @@ export default {
   placeholder="Choose City"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" position="bottom">
+<van-popup v-model:show="showPicker" round position="bottom">
   <van-picker
-    show-toolbar
+    title="Title"
     :columns="columns"
     @cancel="showPicker = false"
     @confirm="onConfirm"
@@ -267,12 +248,12 @@ export default {
 | value-key | Key of option text | _string_ | `text` |
 | toolbar-position | Toolbar position, cat be set to `bottom` | _string_ | `top` |
 | loading | Whether to show loading prompt | _boolean_ | `false` |
-| show-toolbar | Whether to show toolbar | _boolean_ | `false` |
-| allow-html `v2.1.8` | Whether to allow HTML in option text | _boolean_ | `true` |
+| show-toolbar | Whether to show toolbar | _boolean_ | `true` |
+| allow-html | Whether to allow HTML in option text | _boolean_ | `false` |
 | default-index | Default value index of single column picker | _number \| string_ | `0` |
-| item-height | Option height | _number \| string_ | `44` |
-| visible-item-count | Count of visible columns | _number \| string_ | `5` |
-| swipe-duration `v2.2.10` | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
+| item-height `v2.8.6` | Option height, supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `44` |
+| visible-item-count | Count of visible columns | _number \| string_ | `6` |
+| swipe-duration | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
 
 ### Events
 
@@ -286,12 +267,15 @@ Picker events will pass different parameters according to the columns are single
 
 ### Slots
 
-| Name           | Description                  |
-| -------------- | ---------------------------- |
-| default        | Custom toolbar content       |
-| title          | Custom title                 |
-| columns-top    | Custom content above columns |
-| columns-bottom | Custom content below columns |
+| Name | Description | SlotProps |
+| --- | --- | --- |
+| default | Custom toolbar content | - |
+| title | Custom title | - |
+| confirm `v2.10.11` | Custom confirm button text | - |
+| cancel `v2.10.11` | Custom cancel button text | - |
+| option `v2.10.11` | Custom option content | _option: string \| object_ |
+| columns-top | Custom content above columns | - |
+| columns-bottom | Custom content below columns | - |
 
 ### Data Structure of Column
 
@@ -304,7 +288,7 @@ Picker events will pass different parameters according to the columns are single
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Picker instance and call instance methods
+Use [ref](https://vuejs.org/v2/api/#ref) to get Picker instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |

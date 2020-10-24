@@ -3,11 +3,12 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Cell, CellGroup } from 'vant';
 
-Vue.use(Cell);
-Vue.use(CellGroup);
+const app = createApp();
+app.use(Cell);
+app.use(CellGroup);
 ```
 
 ## Usage
@@ -84,20 +85,32 @@ Vue.use(CellGroup);
 ### Use Slots
 
 ```html
-<van-cell value="内容" is-link>
+<van-cell value="Content" is-link>
   <!-- Use the title slot to customize the title -->
   <template #title>
-    <span class="custom-title">单元格</span>
-    <van-tag type="danger">标签</van-tag>
+    <span class="custom-title">Title</span>
+    <van-tag type="danger">Tag</van-tag>
   </template>
 </van-cell>
 
-<van-cell title="单元格" icon="shop-o">
+<van-cell title="Title" icon="shop-o">
   <!-- Use the right-icon slot to customize the right icon -->
   <template #right-icon>
-    <van-icon name="search" style="line-height: inherit;" />
+    <van-icon name="search" class="search-icon" />
   </template>
 </van-cell>
+
+<style>
+  .custom-title {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .search-icon {
+    font-size: 16px;
+    line-height: inherit;
+  }
+</style>
 ```
 
 ### Vertical Center
@@ -154,10 +167,11 @@ Vue.use(CellGroup);
 
 ### Cell Slots
 
-| Name       | Description       |
-| ---------- | ----------------- |
-| default    | Custom value      |
-| icon       | Custom icon       |
-| title      | Custom title      |
-| label      | Custom label      |
-| right-icon | Custom right icon |
+| Name       | Description                       |
+| ---------- | --------------------------------- |
+| default    | Custom value                      |
+| icon       | Custom icon                       |
+| title      | Custom title                      |
+| label      | Custom label                      |
+| right-icon | Custom right icon                 |
+| extra      | Custom extra content on the right |

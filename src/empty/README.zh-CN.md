@@ -2,15 +2,16 @@
 
 ### 介绍
 
-空状态时的占位提示，2.6 版本开始支持此组件
+空状态时的占位提示，2.6 版本开始支持此组件。
 
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Empty } from 'vant';
 
-Vue.use(Empty);
+const app = createApp();
+app.use(Empty);
 ```
 
 ## 代码演示
@@ -23,7 +24,7 @@ Vue.use(Empty);
 
 ### 图片类型
 
-Empty 组件内置了多种占位图片类型，可以在不同业务场景下使用
+Empty 组件内置了多种占位图片类型，可以在不同业务场景下使用。
 
 ```html
 <!-- 通用错误 -->
@@ -36,7 +37,7 @@ Empty 组件内置了多种占位图片类型，可以在不同业务场景下�
 
 ### 自定义图片
 
-需要自定义图片时，可以在 image 属性中传入任意图片 URL
+需要自定义图片时，可以在 image 属性中传入任意图片 URL。
 
 ```html
 <van-empty
@@ -55,7 +56,7 @@ Empty 组件内置了多种占位图片类型，可以在不同业务场景下�
 
 ### 底部内容
 
-通过默认插槽可以在 Empty 组件的下方插入内容
+通过默认插槽可以在 Empty 组件的下方插入内容。
 
 ```html
 <van-empty description="描述文字">
@@ -67,6 +68,7 @@ Empty 组件内置了多种占位图片类型，可以在不同业务场景下�
 <style>
   .bottom-button {
     width: 160px;
+    height: 40px;
   }
 </style>
 ```
@@ -78,6 +80,7 @@ Empty 组件内置了多种占位图片类型，可以在不同业务场景下�
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | image | 图片类型，可选值为 `error` `network` `search`，支持传入图片 URL | _string_ | `default` |
+| image-size `v2.10.11` | 图片大小，默认单位为 `px` | _number \| string_ | - |
 | description | 图片下方的描述文字 | _string_ | - |
 
 ### Slots

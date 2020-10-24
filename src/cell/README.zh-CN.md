@@ -1,20 +1,25 @@
 # Cell 单元格
 
+### 介绍
+
+单元格为列表中的单个展示项。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Cell, CellGroup } from 'vant';
 
-Vue.use(Cell);
-Vue.use(CellGroup);
+const app = createApp();
+app.use(Cell);
+app.use(CellGroup);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-`Cell`可以单独使用，也可以与`CellGroup`搭配使用。`CellGroup`可以为`Cell`提供上下外边框
+`Cell` 可以单独使用，也可以与 `CellGroup` 搭配使用，`CellGroup` 可以为 `Cell` 提供上下外边框。
 
 ```html
 <van-cell-group>
@@ -25,7 +30,7 @@ Vue.use(CellGroup);
 
 ### 单元格大小
 
-通过`size`属性可以控制单元格的大小
+通过 `size` 属性可以控制单元格的大小。
 
 ```html
 <van-cell title="单元格" value="内容" size="large" />
@@ -34,7 +39,7 @@ Vue.use(CellGroup);
 
 ### 展示图标
 
-通过`icon`属性在标题左侧展示图标
+通过 `icon` 属性在标题左侧展示图标。
 
 ```html
 <van-cell title="单元格" icon="location-o" />
@@ -42,7 +47,7 @@ Vue.use(CellGroup);
 
 ### 只设置 value
 
-只设置`value`时，内容会靠左对齐
+只设置 `value` 时，内容会靠左对齐。
 
 ```html
 <van-cell value="内容" />
@@ -50,7 +55,7 @@ Vue.use(CellGroup);
 
 ### 展示箭头
 
-设置`is-link`属性后会在单元格右侧显示箭头，并且可以通过`arrow-direction`属性控制箭头方向
+设置 `is-link` 属性后会在单元格右侧显示箭头，并且可以通过 `arrow-direction` 属性控制箭头方向。
 
 ```html
 <van-cell title="单元格" is-link />
@@ -60,7 +65,7 @@ Vue.use(CellGroup);
 
 ### 页面导航
 
-可以通过`url`属性进行 URL 跳转，或通过`to`属性进行路由跳转
+可以通过 `url` 属性进行 URL 跳转，或通过 `to` 属性进行路由跳转。
 
 ```html
 <van-cell title="URL 跳转" is-link url="/vant/mobile.html" />
@@ -69,7 +74,7 @@ Vue.use(CellGroup);
 
 ### 分组标题
 
-通过`CellGroup`的`title`属性可以指定分组标题
+通过 `CellGroup` 的 `title` 属性可以指定分组标题。
 
 ```html
 <van-cell-group title="分组1">
@@ -82,7 +87,7 @@ Vue.use(CellGroup);
 
 ### 使用插槽
 
-如以上用法不能满足你的需求，可以使用插槽来自定义内容
+如以上用法不能满足你的需求，可以使用插槽来自定义内容。
 
 ```html
 <van-cell value="内容" is-link>
@@ -96,14 +101,26 @@ Vue.use(CellGroup);
 <van-cell title="单元格" icon="shop-o">
   <!-- 使用 right-icon 插槽来自定义右侧图标 -->
   <template #right-icon>
-    <van-icon name="search" style="line-height: inherit;" />
+    <van-icon name="search" class="search-icon" />
   </template>
 </van-cell>
+
+<style>
+  .custom-title {
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .search-icon {
+    font-size: 16px;
+    line-height: inherit;
+  }
+</style>
 ```
 
 ### 垂直居中
 
-通过`center`属性可以让`Cell`的左右内容都垂直居中
+通过 `center` 属性可以让 `Cell` 的左右内容都垂直居中。
 
 ```html
 <van-cell center title="单元格" value="内容" label="描述信息" />
@@ -159,8 +176,9 @@ Vue.use(CellGroup);
 
 | 名称       | 说明                          |
 | ---------- | ----------------------------- |
-| default    | 自定义右侧内容                |
-| title      | 自定义左侧标题                |
-| label      | 自定义标题下方描述            |
+| default    | 自定义右侧 value 的内容       |
+| title      | 自定义左侧 title 的内容       |
+| label      | 自定义标题下方 label 的内容   |
 | icon       | 自定义左侧图标                |
 | right-icon | 自定义右侧按钮，默认为`arrow` |
+| extra      | 自定义单元格最右侧的额外内容  |

@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { PullRefresh } from 'vant';
 
-Vue.use(PullRefresh);
+const app = createApp();
+app.use(PullRefresh);
 ```
 
 ## Usage
@@ -59,7 +60,7 @@ Use `success-text` to set the success prompt after the refresh is successful
 
 ### Custom Tips
 
-Use slots to custom tips
+Use slots to custom tips.
 
 ```html
 <van-pull-refresh v-model="isLoading" :head-height="80" @refresh="onRefresh">

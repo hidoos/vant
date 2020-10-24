@@ -1,12 +1,17 @@
 # PullRefresh 下拉刷新
 
+### 介绍
+
+用于提供下拉刷新的交互操作。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { PullRefresh } from 'vant';
 
-Vue.use(PullRefresh);
+const app = createApp();
+app.use(PullRefresh);
 ```
 
 ## 代码演示
@@ -45,7 +50,7 @@ export default {
 
 ### 成功提示
 
-通过`success-text`可以设置刷新成功后的顶部提示文案
+通过 `success-text` 可以设置刷新成功后的顶部提示文案。
 
 ```html
 <van-pull-refresh
@@ -59,7 +64,7 @@ export default {
 
 ### 自定义提示
 
-通过插槽可以自定义下拉刷新过程中的提示内容
+通过插槽可以自定义下拉刷新过程中的提示内容。
 
 ```html
 <van-pull-refresh v-model="isLoading" :head-height="80" @refresh="onRefresh">
@@ -118,7 +123,7 @@ export default {
 
 ### Slots
 
-| 名称    | 说明                 | SlotProps                  |
+| 名称    | 说明                 | 参数                       |
 | ------- | -------------------- | -------------------------- |
 | default | 自定义内容           | -                          |
 | normal  | 非下拉状态时顶部内容 | -                          |
@@ -128,6 +133,14 @@ export default {
 | success | 刷新成功提示内容     | -                          |
 
 ## 常见问题
+
+### PullReresh 的内容未填满屏幕时，只有一部分区域可以下拉？
+
+默认情况下，下拉区域的高度是和内容高度保持一致的，如果需要让下拉区域始终为全屏，可以给 PullRefresh 设置一个与屏幕大小相等的最小高度：
+
+```html
+<van-pull-refresh style="min-height: 100vh;" />
+```
 
 ### 在桌面端无法操作组件？
 

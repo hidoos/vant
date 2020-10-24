@@ -3,11 +3,12 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Tabbar, TabbarItem } from 'vant';
 
-Vue.use(Tabbar);
-Vue.use(TabbarItem);
+const app = createApp();
+app.use(Tabbar);
+app.use(TabbarItem);
 ```
 
 ## Usage
@@ -67,7 +68,7 @@ export default {
 
 ### Custom Icon
 
-Use `icon` slot to custom icon
+Use `icon` slot to custom icon.
 
 ```html
 <van-tabbar v-model="active">
@@ -102,7 +103,7 @@ export default {
 <van-tabbar v-model="active" active-color="#07c160" inactive-color="#000">
   <van-tabbar-item icon="home-o">Tab</van-tabbar-item>
   <van-tabbar-item icon="search">Tab</van-tabbar-item>
-  <van-tabbar-item icon="freinds-o">Tab</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">Tab</van-tabbar-item>
   <van-tabbar-item icon="setting-o">Tab</van-tabbar-item>
 </van-tabbar>
 ```
@@ -113,7 +114,7 @@ export default {
 <van-tabbar v-model="active" @change="onChange">
   <van-tabbar-item icon="home-o">Tab1</van-tabbar-item>
   <van-tabbar-item icon="search">Tab2</van-tabbar-item>
-  <van-tabbar-item icon="freinds-o">Tab3</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">Tab3</van-tabbar-item>
   <van-tabbar-item icon="setting-o">Tab4</van-tabbar-item>
 </van-tabbar>
 ```
@@ -160,6 +161,7 @@ export default {
 | route | Whether to enable route mode | _boolean_ | `false` |
 | placeholder `v2.6.0` | Whether to generage a placeholder element when fixed | _boolean_ | `false` |
 | safe-area-inset-bottom | Whether to enable bottom safe area adaptation | _boolean_ | `false` |
+| before-change `v2.10.4` | Callback function before changing tabs，return `false` to prevent change，support return Promise | _(name) => boolean \| Promise_ | - |
 
 ### Tabbar Events
 

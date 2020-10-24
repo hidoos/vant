@@ -31,7 +31,7 @@ Vant 使用了 [Less](http://lesscss.org/) 对样式进行预处理，并内置�
 
 #### 按需引入样式（推荐）
 
-在 babel.config.js 中配置按需引入样式源文件，注意 babel6 不支持按需引入样式，请手动引入样式
+在 babel.config.js 中配置按需引入样式源文件，注意 babel6 不支持按需引入样式，请手动引入样式。
 
 ```js
 module.exports = {
@@ -75,12 +75,15 @@ module.exports = {
         {
           loader: 'less-loader',
           options: {
-            modifyVars: {
-              // 直接覆盖变量
-              'text-color': '#111',
-              'border-color': '#eee',
-              // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
-              hack: `true; @import "your-less-file-path.less";`,
+            // 若使用 less-loader@5，请移除 lessOptions 这一级，直接配置选项。
+            lessOptions: {
+              modifyVars: {
+                // 直接覆盖变量
+                'text-color': '#111',
+                'border-color': '#eee',
+                // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+                hack: `true; @import "your-less-file-path.less";`,
+              },
             },
           },
         },
@@ -98,12 +101,15 @@ module.exports = {
   css: {
     loaderOptions: {
       less: {
-        modifyVars: {
-          // 直接覆盖变量
-          'text-color': '#111',
-          'border-color': '#eee',
-          // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
-          hack: `true; @import "your-less-file-path.less";`,
+        // 若使用 less-loader@5，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            // 直接覆盖变量
+            'text-color': '#111',
+            'border-color': '#eee',
+            // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+            hack: `true; @import "your-less-file-path.less";`,
+          },
         },
       },
     },

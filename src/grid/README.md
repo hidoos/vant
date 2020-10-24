@@ -3,11 +3,12 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Grid, GridItem } from 'vant';
 
-Vue.use(Grid);
-Vue.use(GridItem);
+const app = createApp();
+app.use(Grid);
+app.use(GridItem);
 ```
 
 ## Usage
@@ -63,6 +64,16 @@ Vue.use(GridItem);
 </van-grid>
 ```
 
+### Horizontal
+
+```html
+<van-grid direction="horizontal" :column-num="2">
+  <van-grid-item icon="photo-o" text="文字" />
+  <van-grid-item icon="photo-o" text="文字" />
+  <van-grid-item icon="photo-o" text="文字" />
+</van-grid>
+```
+
 ### Route
 
 ```html
@@ -87,13 +98,14 @@ Vue.use(GridItem);
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| column-num `v2.0.4` | Column Num | _number \| string_ | `4` |
-| icon-size `v2.2.6` | Icon size | _number \| string_ | `28px` |
+| column-num | Column Num | _number \| string_ | `4` |
+| icon-size | Icon size | _number \| string_ | `28px` |
 | gutter | Gutter | _number \| string_ | `0` |
 | border | Whether to show border | _boolean_ | `true` |
 | center | Whether to center content | _boolean_ | `true` |
 | square | Whether to be square shape | _boolean_ | `false` |
 | clickable | Whether to show click feedback when clicked | _boolean_ | `false` |
+| direction `v2.8.2` | Content arrangement direction, can be set to `horizontal` | _string_ | `vertical` |
 
 ### GridItem Props
 
@@ -102,7 +114,7 @@ Vue.use(GridItem);
 | text | Text | _string_ | - |
 | icon | Icon name or URL | _string_ | - |
 | icon-prefix `v2.5.3` | Icon className prefix | _string_ | `van-icon` |
-| dot `v2.2.1` | Whether to show red dot | _boolean_ | `false` |
+| dot | Whether to show red dot | _boolean_ | `false` |
 | badge `v2.5.6` | Content of the badge | _number \| string_ | - |
 | url | Link URL | _string_ | - |
 | to | Target route of the link, same as to of vue-router | _string \| object_ | - |

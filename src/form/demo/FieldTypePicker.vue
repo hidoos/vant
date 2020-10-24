@@ -1,24 +1,20 @@
 <template>
-  <div class="van-hairline--bottom">
-    <van-field
-      readonly
-      clickable
-      name="picker"
-      :value="value"
-      :border="false"
-      :label="t('picker')"
-      :placeholder="t('placeholder')"
-      @click="showPicker = true"
+  <van-field
+    readonly
+    clickable
+    name="picker"
+    :label="t('picker')"
+    :model-value="value"
+    :placeholder="t('placeholder')"
+    @click="showPicker = true"
+  />
+  <van-popup v-model:show="showPicker" round position="bottom" teleport="body">
+    <van-picker
+      :columns="t('textColumns')"
+      @confirm="onConfirm"
+      @cancel="onCancel"
     />
-    <van-popup v-model="showPicker" position="bottom">
-      <van-picker
-        show-toolbar
-        :columns="t('textColumns')"
-        @confirm="onConfirm"
-        @cancel="onCancel"
-      />
-    </van-popup>
-  </div>
+  </van-popup>
 </template>
 
 <script>

@@ -1,20 +1,25 @@
 # Steps 步骤条
 
+### 介绍
+
+用于展示操作流程的各个环节，让用户了解当前的操作在整体流程中的位置。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Step, Steps } from 'vant';
 
-Vue.use(Step);
-Vue.use(Steps);
+const app = createApp();
+app.use(Step);
+app.use(Steps);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-`active`属性表示当前步骤的索引，从 0 起计
+`active` 属性表示当前步骤的索引，从 0 起计。
 
 ```html
 <van-steps :active="active">
@@ -37,7 +42,7 @@ export default {
 
 ### 自定义样式
 
-可以通过`active-icon`和`active-color`属性设置激活状态下的图标和颜色
+可以通过 `active-icon` 和 `active-color` 属性设置激活状态下的图标和颜色。
 
 ```html
 <van-steps :active="active" active-icon="success" active-color="#38f">
@@ -50,7 +55,7 @@ export default {
 
 ### 竖向步骤条
 
-可以通过设置`direction`属性来改变步骤条的显示方向
+可以通过设置 `direction` 属性来改变步骤条的显示方向。
 
 ```html
 <van-steps direction="vertical" :active="0">
@@ -78,6 +83,7 @@ export default {
 | active | 当前步骤 | _number \| string_ | `0` |
 | direction | 显示方向，可选值为 `vertical` | _string_ | `horizontal` |
 | active-color | 激活状态颜色 | _string_ | `#07c160` |
+| inactive-color `v2.9.1` | 未激活状态颜色 | _string_ | `#969799` |
 | active-icon | 激活状态底部图标，可选值见 [Icon 组件](#/zh-CN/icon) | _string_ | `checked` |
 | inactive-icon | 未激活状态底部图标，可选值见 [Icon 组件](#/zh-CN/icon) | _string_ | - |
 

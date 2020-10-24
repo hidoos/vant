@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Sticky } from 'vant';
 
-Vue.use(Sticky);
+const app = createApp();
+app.use(Sticky);
 ```
 
 ## Usage
@@ -23,7 +24,7 @@ Vue.use(Sticky);
 
 ```html
 <van-sticky :offset-top="50">
-  <van-button type="info">Offset Top</van-button>
+  <van-button type="primary">Offset Top</van-button>
 </van-sticky>
 ```
 
@@ -54,11 +55,11 @@ export default {
 
 ### Props
 
-| Attribute  | Description         | Type               | Default |
-| ---------- | ------------------- | ------------------ | ------- |
-| offset-top | Offset top          | _number \| string_ | `0`     |
-| z-index    | z-index when sticky | _number \| string_ | `99`    |
-| container  | Container DOM       | _Element_          | -       |
+| Attribute | Description | Type | Default |
+| --- | --- | --- | --- |
+| offset-top `v2.8.7` | Offset top, supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `0` |
+| z-index | z-index when sticky | _number \| string_ | `99` |
+| container | Container DOM | _Element_ | - |
 
 ### Events
 

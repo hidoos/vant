@@ -1,53 +1,43 @@
 <template>
-  <demo-section>
-    <demo-block :title="t('basicUsage')">
-      <van-cell is-link :title="t('showSheet')" @click="show.basic = true" />
-      <van-share-sheet
-        v-model="show.basic"
-        :title="t('title')"
-        :options="options"
-        @select="onSelect"
-      />
-    </demo-block>
+  <demo-block card :title="t('basicUsage')">
+    <van-cell is-link :title="t('showSheet')" @click="show.basic = true" />
+    <van-share-sheet
+      v-model:show="show.basic"
+      :title="t('title')"
+      :options="options"
+      @select="onSelect"
+    />
+  </demo-block>
 
-    <demo-block :title="t('multiLine')">
-      <van-cell
-        is-link
-        :title="t('showSheet')"
-        @click="show.multiLine = true"
-      />
-      <van-share-sheet
-        v-model="show.multiLine"
-        :title="t('title')"
-        :options="multiLineOptions"
-        @select="onSelect"
-      />
-    </demo-block>
+  <demo-block card :title="t('multiLine')">
+    <van-cell is-link :title="t('showSheet')" @click="show.multiLine = true" />
+    <van-share-sheet
+      v-model:show="show.multiLine"
+      :title="t('title')"
+      :options="multiLineOptions"
+      @select="onSelect"
+    />
+  </demo-block>
 
-    <demo-block :title="t('customIcon')">
-      <van-cell
-        is-link
-        :title="t('showSheet')"
-        @click="show.customIcon = true"
-      />
-      <van-share-sheet
-        v-model="show.customIcon"
-        :options="customIconOptions"
-        @select="onSelect"
-      />
-    </demo-block>
+  <demo-block card :title="t('customIcon')">
+    <van-cell is-link :title="t('showSheet')" @click="show.customIcon = true" />
+    <van-share-sheet
+      v-model:show="show.customIcon"
+      :options="customIconOptions"
+      @select="onSelect"
+    />
+  </demo-block>
 
-    <demo-block :title="t('withDesc')">
-      <van-cell is-link :title="t('showSheet')" @click="show.withDesc = true" />
-      <van-share-sheet
-        v-model="show.withDesc"
-        :title="t('title')"
-        :options="options"
-        :description="t('description')"
-        @select="onSelect"
-      />
-    </demo-block>
-  </demo-section>
+  <demo-block card :title="t('withDesc')">
+    <van-cell is-link :title="t('showSheet')" @click="show.withDesc = true" />
+    <van-share-sheet
+      v-model:show="show.withDesc"
+      :title="t('title')"
+      :options="optionsWithDesc"
+      :description="t('description')"
+      @select="onSelect"
+    />
+  </demo-block>
 </template>
 
 <script>
@@ -136,6 +126,20 @@ export default {
           name: this.t('name'),
           icon: 'https://img.yzcdn.cn/vant/custom-icon-water.png',
         },
+      ];
+    },
+
+    optionsWithDesc() {
+      return [
+        { name: this.t('wechat'), icon: 'wechat' },
+        { name: this.t('weibo'), icon: 'weibo' },
+        {
+          name: this.t('link'),
+          icon: 'link',
+          description: this.t('description'),
+        },
+        { name: this.t('poster'), icon: 'poster' },
+        { name: this.t('qrcode'), icon: 'qrcode' },
       ];
     },
   },

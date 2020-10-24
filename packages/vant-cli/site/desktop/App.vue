@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <van-doc
+      v-if="config"
       :lang="lang"
       :config="config"
       :versions="versions"
@@ -66,14 +67,24 @@ export default {
   },
 
   watch: {
+    // eslint-disable-next-line
+    '$route.path'() {
+      this.setTitle();
+    },
+
     lang(val) {
       setLang(val);
       this.setTitle();
     },
-  },
 
-  created() {
-    this.setTitle();
+    config: {
+      handler(val) {
+        if (val) {
+          this.setTitle();
+        }
+      },
+      immediate: true,
+    },
   },
 
   mounted() {
@@ -86,7 +97,18 @@ export default {
     setTitle() {
       let { title } = this.config;
 
-      if (this.config.description) {
+      const navItems = this.config.nav.reduce(
+        (result, nav) => [...result, ...nav.items],
+        []
+      );
+
+      const current = navItems.find((item) => {
+        return item.path === this.$route.meta.name;
+      });
+
+      if (current && current.title) {
+        title = current.title + ' - ' + title;
+      } else if (this.config.description) {
         title += ` - ${this.config.description}`;
       }
 
@@ -102,7 +124,6 @@ export default {
 
 .van-doc-intro {
   padding-top: 20px;
-  font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   text-align: center;
 
   p {

@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { SubmitBar } from 'vant';
 
-Vue.use(SubmitBar);
+const app = createApp();
+app.use(SubmitBar);
 ```
 
 ## Usage
@@ -65,6 +66,7 @@ Use slot to add custom contents.
 | text-align `v2.3.0` | Price label text align can be set to `left` | _string_ | `right` |
 | button-text | Button text | _string_ | - |
 | button-type | Button type | _string_ | `danger` |
+| button-color `v2.9.1` | Button color | _string_ | - |
 | tip | Tip | _string_ | - |
 | tip-icon | Icon | _string_ | - |
 | currency | Currency symbol | _string_ | `¥` |

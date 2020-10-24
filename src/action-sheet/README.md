@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { ActionSheet } from 'vant';
 
-Vue.use(ActionSheet);
+const app = createApp();
+app.use(ActionSheet);
 ```
 
 ## Usage
@@ -16,7 +17,8 @@ Vue.use(ActionSheet);
 Use `actions` prop to set options of action-sheet.
 
 ```html
-<van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
+<van-cell is-link title="Basic Usage" @click="show = true" />
+<van-action-sheet v-model:show="show" :actions="actions" @select="onSelect" />
 ```
 
 ```js
@@ -27,9 +29,9 @@ export default {
     return {
       show: false,
       actions: [
-        { name: 'Option' },
-        { name: 'Option' },
-        { name: 'Option', subname: 'Description' },
+        { name: 'Option 1' },
+        { name: 'Option 2' },
+        { name: 'Option 3' },
       ],
     };
   },
@@ -46,9 +48,10 @@ export default {
 
 ```html
 <van-action-sheet
-  v-model="show"
+  v-model:show="show"
   :actions="actions"
   cancel-text="Cancel"
+  close-on-click-action
   @cancel="onCancel"
 />
 ```
@@ -60,11 +63,15 @@ export default {
   data() {
     return {
       show: false,
+      actions: [
+        { name: 'Option 1' },
+        { name: 'Option 2' },
+        { name: 'Option 3' },
+      ],
     };
   },
   methods: {
     onCancel() {
-      this.show = false;
       Toast('cancel');
     },
   },
@@ -74,17 +81,12 @@ export default {
 ### Show Description
 
 ```html
-<van-action-sheet v-model="show" :actions="actions" description="Description" />
-```
-
-### Option Status
-
-```html
 <van-action-sheet
-  v-model="show"
+  v-model:show="show"
   :actions="actions"
   cancel-text="Cancel"
-  @cancel="onCancel"
+  description="Description"
+  close-on-click-action
 />
 ```
 
@@ -94,9 +96,35 @@ export default {
     return {
       show: false,
       actions: [
-        { name: 'Option', color: '#07c160' },
-        { loading: true },
+        { name: 'Option 1' },
+        { name: 'Option 2' },
+        { name: 'Option 3', subname: 'Description' },
+      ],
+    };
+  },
+};
+```
+
+### Option Status
+
+```html
+<van-action-sheet
+  v-model:show="show"
+  :actions="actions"
+  cancel-text="Cancel"
+  close-on-click-action
+/>
+```
+
+```js
+export default {
+  data() {
+    return {
+      show: false,
+      actions: [
+        { name: 'Colored Option', color: '#ee0a24' },
         { name: 'Disabled Option', disabled: true },
+        { name: 'Loading Option', loading: true },
       ],
     };
   },
@@ -106,7 +134,7 @@ export default {
 ### Custom Panel
 
 ```html
-<van-action-sheet v-model="show" title="Title">
+<van-action-sheet v-model:show="show" title="Title">
   <div class="content">Content</div>
 </van-action-sheet>
 
@@ -123,14 +151,15 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| v-model (value) | Whether to show ActionSheet | _boolean_ | `false` |
+| v-model:show | Whether to show ActionSheet | _boolean_ | `false` |
 | actions | Options | _Action[]_ | `[]` |
 | title | Title | _string_ | - |
 | cancel-text | Text of cancel button | _string_ | - |
-| description `v2.2.8` | Description above the options | _string_ | - |
-| close-icon `v2.2.13` | Close icon name | _string_ | `cross` |
-| duration `v2.0.3` | Transition duration, unit second | _number \| string_ | `0.3` |
-| round `v2.0.9` | Whether to show round corner | _boolean_ | `true` |
+| description | Description above the options | _string_ | - |
+| closeable `v2.10.5` | Whether to show close icon | _boolean_ | `true` |
+| close-icon | Close icon name | _string_ | `cross` |
+| duration | Transition duration, unit second | _number \| string_ | `0.3` |
+| round | Whether to show round corner | _boolean_ | `true` |
 | overlay | Whether to show overlay | _boolean_ | `true` |
 | lock-scroll | Whether to lock background scroll | _boolean_ | `true` |
 | lazy-render | Whether to lazy render util appeared | _boolean_ | `true` |
@@ -138,7 +167,7 @@ export default {
 | close-on-click-action | Whether to close when click action | _boolean_ | `false` |
 | close-on-click-overlay | Whether to close when click overlay | _boolean_ | `true` |
 | safe-area-inset-bottom | Whether to enable bottom safe area adaptation | _boolean_ | `true` |
-| get-container | Return the mount node for ActionSheet | _string \| () => Element_ | - |
+| teleport | Return the mount node for ActionSheet | _string \| Element_ | - |
 
 ### Data Structure of Action
 
@@ -162,3 +191,10 @@ export default {
 | opened | Triggered when opened ActionSheet | - |
 | closed | Triggered when closed ActionSheet | - |
 | click-overlay | Triggered when click overlay | - |
+
+### Slots
+
+| Name                  | Description        |
+| --------------------- | ------------------ |
+| default               | Custom content     |
+| description `v2.10.4` | Custom description |

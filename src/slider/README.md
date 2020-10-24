@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Slider } from 'vant';
 
-Vue.use(Slider);
+const app = createApp();
+app.use(Slider);
 ```
 
 ## Usage
@@ -29,6 +30,32 @@ export default {
   methods: {
     onChange(value) {
       Toast('Current value：' + value);
+    },
+  },
+};
+```
+
+### Dual thumb
+
+Add `range` attribute to open dual thumb mode.
+
+```html
+<van-slider v-model="value" range @change="onChange" />
+```
+
+```js
+import { Toast } from 'vant';
+
+export default {
+  data() {
+    return {
+      // value must be an Array
+      value: [10, 50],
+    };
+  },
+  methods: {
+    onChange(value) {
+      Toast('current value：' + value);
     },
   },
 };
@@ -63,9 +90,7 @@ export default {
 ```html
 <van-slider v-model="value" active-color="#ee0a24">
   <template #button>
-    <div class="custom-button">
-      {{ value }}
-    </div>
+    <div class="custom-button">{{ value }}</div>
   </template>
 </van-slider>
 
@@ -85,9 +110,34 @@ export default {
 ### Vertical
 
 ```html
-<div :style="{ height: '100px' }">
-  <van-slider v-model="value" vertical />
+<div :style="{ height: '150px' }">
+  <van-slider v-model="value" vertical @change="onChange" />
+  <van-slider
+    v-model="value2"
+    range
+    vertical
+    style="margin-left: 100px;"
+    @change="onChange"
+  />
 </div>
+```
+
+```js
+import { Toast } from 'vant';
+
+export default {
+  data() {
+    return {
+      value: 50,
+      value2: [10, 50],
+    };
+  },
+  methods: {
+    onChange(value) {
+      Toast('Current value：' + value);
+    },
+  },
+};
 ```
 
 ## API
@@ -96,7 +146,7 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| value | Current value | _number_ | `0` |
+| value | Current value | _number \| array_ | `0` |
 | max | Max value | _number \| string_ | `100` |
 | min | Min value | _number \| string_ | `0` |
 | step | Step size | _number \| string_ | `1` |
@@ -104,6 +154,7 @@ export default {
 | button-size `v2.4.5` | Button size | _number \| string_ | `24px` |
 | active-color | Active color of bar | _string_ | `#1989fa` |
 | inactive-color | Inactive color of bar | _string_ | `#e5e5e5` |
+| range | Whether to enable dual thumb mode | _boolean_ | `false` |
 | disabled | Whether to disable slider | _boolean_ | `false` |
 | vertical | Whether to display slider vertically | _boolean_ | `false` |
 

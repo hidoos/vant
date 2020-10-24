@@ -23,7 +23,7 @@
         :placeholder="t('asyncValidator')"
       />
       <div style="margin: 16px 16px 0;">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="primary" native-type="submit">
           {{ t('submit') }}
         </van-button>
       </div>
@@ -67,7 +67,7 @@ export default {
 
   methods: {
     validator(val) {
-      return val === '1234';
+      return /1\d{10}/.test(val);
     },
 
     asyncValidator(val) {

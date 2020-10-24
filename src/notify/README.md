@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Notify } from 'vant';
 
-Vue.use(Notify);
+const app = createApp();
+app.use(Notify);
 ```
 
 ## Usage
@@ -41,14 +42,42 @@ Notify({
 });
 ```
 
-### \$notify Method
+### Global Method
 
-After import the Notify component, the \$notify method is automatically mounted on Vue.prototype, making it easy to call within a vue component.
+After registering the Notify component through `app.use`, the `$notify` method will be automatically mounted on all subcomponents of the app.
 
 ```js
 export default {
   mounted() {
     this.$notify('Notify Message');
+  },
+};
+```
+
+### Component Call
+
+```html
+<van-button type="primary" text="Component Call" @click="showNotify" />
+<van-notify v-model:show="show" type="success">
+  <van-icon name="bell" style="margin-right: 4px;" />
+  <span>Content</span>
+</van-notify>
+```
+
+```js
+export default {
+  data() {
+    return {
+      show: false,
+    };
+  },
+  methods: {
+    showNotify() {
+      this.show = true;
+      setTimeout(() => {
+        this.show = false;
+      }, 2000);
+    },
   },
 };
 ```
@@ -68,7 +97,7 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| type `v2.1.6` | Can be set to `primary` `success` `warning` | _string_ | `danger` |
+| type | Can be set to `primary` `success` `warning` | _string_ | `danger` |
 | message | Message | _string_ | - |
 | duration | Duration(ms), won't disappear if value is 0 | _number \| string_ | `3000` |
 | color | Message color | _string_ | `white` |  |

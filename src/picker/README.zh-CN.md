@@ -2,63 +2,37 @@
 
 ### 介绍
 
-提供多个选项集合供用户选择，支持单列选择和多列级联，通常与[弹出层](#/zh-CN/popup)组件配合使用
+提供多个选项集合供用户选择，支持单列选择和多列级联，通常与[弹出层](#/zh-CN/popup)组件配合使用。
 
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Picker } from 'vant';
 
-Vue.use(Picker);
+const app = createApp();
+app.use(Picker);
 ```
 
 ## 代码演示
 
 ### 基础用法
 
-Picker 组件通过`columns`属性配置选项数据，`columns`是一个包含字符串或对象的数组
+#### 选项配置
 
-```html
-<van-picker :columns="columns" @change="onChange" />
-```
+Picker 组件通过 `columns` 属性配置选项数据，`columns` 是一个包含字符串或对象的数组。
 
-```js
-import { Toast } from 'vant';
+#### 顶部栏
 
-export default {
-  data() {
-    return {
-      columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
-    };
-  },
-  methods: {
-    onChange(picker, value, index) {
-      Toast(`当前值：${value}, 当前索引：${index}`);
-    },
-  },
-};
-```
-
-### 默认选中项
-
-单列选择时，可以通过`default-index`属性设置初始选中项的索引
-
-```html
-<van-picker :columns="columns" :default-index="2" />
-```
-
-### 展示顶部栏
-
-设置`show-toolbar`属性后会展示顶部操作栏，点击确认按钮触发`confirm`事件，点击取消按钮触发`cancel`事件
+顶部栏包含标题、确认按钮和取消按钮，点击确认按钮触发 `confirm` 事件，点击取消按钮触发 `cancel` 事件。
 
 ```html
 <van-picker
-  show-toolbar
   title="标题"
   :columns="columns"
-  @cancel="onCancel"
   @confirm="onConfirm"
+  @cancel="onCancel"
+  @change="onChange"
 />
 ```
 
@@ -68,11 +42,14 @@ import { Toast } from 'vant';
 export default {
   data() {
     return {
-      columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+      columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
     };
   },
   methods: {
     onConfirm(value, index) {
+      Toast(`当前值：${value}, 当前索引：${index}`);
+    },
+    onChange(value, index) {
       Toast(`当前值：${value}, 当前索引：${index}`);
     },
     onCancel() {
@@ -82,12 +59,20 @@ export default {
 };
 ```
 
-### 多列选择
+### 默认选中项
 
-通过`columns`属性可以配置多列选择
+单列选择时，可以通过 `default-index` 属性设置初始选中项的索引。
 
 ```html
-<van-picker show-toolbar title="标题" :columns="columns" />
+<van-picker title="标题" :columns="columns" :default-index="2" />
+```
+
+### 多列选择
+
+`columns` 属性可以通过对象数组的形式配置多列选择，对象中可以配置选项数据、初始选中项等，详细格式见[下方表格](#/zh-CN/picker#column-shu-ju-jie-gou)。
+
+```html
+<van-picker title="标题" :columns="columns" />
 ```
 
 ```js
@@ -113,10 +98,10 @@ export default {
 
 ### 级联选择
 
-使用`columns`的`children`字段可以实现选项级联的效果（从 2.4.5 版本开始支持）
+使用 `columns` 的 `children` 字段可以实现选项级联的效果（从 2.4.5 版本开始支持）。
 
 ```html
-<van-picker show-toolbar title="标题" :columns="columns" />
+<van-picker title="标题" :columns="columns" />
 ```
 
 ```js
@@ -160,7 +145,7 @@ export default {
 
 ### 禁用选项
 
-选项可以为对象结构，通过设置 disabled 来禁用该选项
+选项可以为对象结构，通过设置 `disabled` 来禁用该选项。
 
 ```html
 <van-picker :columns="columns" />
@@ -182,14 +167,14 @@ export default {
 
 ### 动态设置选项
 
-通过 Picker 上的实例方法可以更灵活地控制选择器，比如使用`setColumnValues`方法实现多列联动
+通过 Picker 上的实例方法可以更灵活地控制选择器，比如使用 `setColumnValues` 方法实现多列联动。
 
 ```html
-<van-picker :columns="columns" @change="onChange" />
+<van-picker ref="picker" :columns="columns" @change="onChange" />
 ```
 
 ```js
-const citys = {
+const cities = {
   浙江: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
   福建: ['福州', '厦门', '莆田', '三明', '泉州'],
 };
@@ -197,12 +182,12 @@ const citys = {
 export default {
   data() {
     return {
-      columns: [{ values: Object.keys(citys) }, { values: citys['浙江'] }],
+      columns: [{ values: Object.keys(cities) }, { values: cities['浙江'] }],
     };
   },
   methods: {
-    onChange(picker, values) {
-      picker.setColumnValues(1, citys[values[0]]);
+    onChange(values) {
+      this.$refs.picker.setColumnValues(1, cities[values[0]]);
     },
   },
 };
@@ -210,7 +195,7 @@ export default {
 
 ### 加载状态
 
-若选择器数据是异步获取的，可以通过 `loading` 属性显示加载提示
+若选择器数据是异步获取的，可以通过 `loading` 属性显示加载提示。
 
 ```html
 <van-picker :columns="columns" :loading="loading" />
@@ -235,7 +220,7 @@ export default {
 
 ### 搭配弹出层使用
 
-在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 Popup 和 Field 实现该效果
+在实际场景中，Picker 通常作为用于辅助表单填写，可以搭配 Popup 和 Field 实现该效果。
 
 ```html
 <van-field
@@ -246,9 +231,8 @@ export default {
   placeholder="选择城市"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" position="bottom">
+<van-popup v-model:show="showPicker" round position="bottom">
   <van-picker
-    show-toolbar
     :columns="columns"
     @cancel="showPicker = false"
     @confirm="onConfirm"
@@ -262,7 +246,7 @@ export default {
     return {
       value: '',
       showPicker: false,
-      columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+      columns: ['杭州', '宁波', '温州', '绍兴', '湖州', '嘉兴', '金华', '衢州'],
     };
   },
   methods: {
@@ -287,12 +271,12 @@ export default {
 | value-key | 选项对象中，选项文字对应的键名 | _string_ | `text` |
 | toolbar-position | 顶部栏位置，可选值为`bottom` | _string_ | `top` |
 | loading | 是否显示加载状态 | _boolean_ | `false` |
-| show-toolbar | 是否显示顶部栏 | _boolean_ | `false` |
-| allow-html `v2.1.8` | 是否允许选项内容中渲染 HTML | _boolean_ | `true` |
+| show-toolbar | 是否显示顶部栏 | _boolean_ | `true` |
+| allow-html | 是否允许选项内容中渲染 HTML | _boolean_ | `false` |
 | default-index | 单列选择时，默认选中项的索引 | _number \| string_ | `0` |
-| item-height | 选项高度 | _number \| string_ | `44` |
-| visible-item-count | 可见的选项个数 | _number \| string_ | `5` |
-| swipe-duration `v2.2.10` | 快速滑动时惯性滚动的时长，单位`ms` | _number \| string_ | `1000` |
+| item-height `v2.8.6` | 选项高度，支持 `px` `vw` `rem` 单位，默认 `px` | _number \| string_ | `44` |
+| visible-item-count | 可见的选项个数 | _number \| string_ | `6` |
+| swipe-duration | 快速滑动时惯性滚动的时长，单位 `ms` | _number \| string_ | `1000` |
 
 ### Events
 
@@ -302,20 +286,23 @@ export default {
 | --- | --- | --- |
 | confirm | 点击完成按钮时触发 | 单列：选中值，选中值对应的索引<br>多列：所有列选中值，所有列选中值对应的索引 |
 | cancel | 点击取消按钮时触发 | 单列：选中值，选中值对应的索引<br>多列：所有列选中值，所有列选中值对应的索引 |
-| change | 选项改变时触发 | 单列：Picker 实例，选中值，选中值对应的索引<br>多列：Picker 实例，所有列选中值，当前列对应的索引 |
+| change | 选项改变时触发 | 单列：选中值，选中值对应的索引<br>多列：所有列选中值，当前列对应的索引 |
 
 ### Slots
 
-| 名称           | 说明               |
-| -------------- | ------------------ |
-| default        | 自定义顶部栏内容   |
-| title          | 自定义标题内容     |
-| columns-top    | 自定义选项上方内容 |
-| columns-bottom | 自定义选项下方内容 |
+| 名称               | 说明                   | 参数                       |
+| ------------------ | ---------------------- | -------------------------- |
+| default            | 自定义整个顶部栏的内容 | -                          |
+| title              | 自定义标题内容         | -                          |
+| confirm `v2.10.11` | 自定义确认按钮内容     | -                          |
+| cancel `v2.10.11`  | 自定义取消按钮内容     | -                          |
+| option `v2.10.11`  | 自定义选项内容         | _option: string \| object_ |
+| columns-top        | 自定义选项上方内容     | -                          |
+| columns-bottom     | 自定义选项下方内容     | -                          |
 
 ### Column 数据结构
 
-当传入多列数据时，`columns`为一个对象数组，数组中的每一个对象配置每一列，每一列有以下`key`
+当传入多列数据时，`columns` 为一个对象数组，数组中的每一个对象配置每一列，每一列有以下 `key`:
 
 | 键名              | 说明                       | 类型       |
 | ----------------- | -------------------------- | ---------- |
@@ -326,7 +313,7 @@ export default {
 
 ### 方法
 
-通过 ref 可以获取到 Picker 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 Picker 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)。
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
